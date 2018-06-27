@@ -37,5 +37,44 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+//引入处理中间件
+app.use(extendAPIOutput);
+app.use(apiErrorHandler);
+
+//扩展res对象
+function extendAPIOutput(req,res.next){
+	res.apisuccess=function(data){
+		res.json({
+			status:"success",
+			result:data
+		});
+	}
+	res.apierror=function(err){
+         res.json({
+         	status:"error",
+         	error_code:err.error_code || "UNKNOW",
+         	error_message:err.error_message
+         });
+	}
+	next();
+}
+
+//创建统一错误对象
+function createError(code,mes){
+ var  err = new Error(msg);
+ err.error_code=code;
+ err.error_message=mes;
+ return err;
+  
+} 
+ 
+function apiErrorHandler(err,req,res,next){
+	if(typeof res.apierror==="function"){
+       return  res.apierror(err);
+	}
+  next();
+}
+
+
 
 module.exports = app;

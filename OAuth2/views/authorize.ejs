@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>应用授权</h1>
+    <p>Welcome to <%= title %></p>
+    <form method="post" action="/OAuth2/authorize?client_id=<%=%>redirect_uri=<%%>">
+    	<button type="submit">确认授权</button>
+    </form>
+  </body>
+</html>
